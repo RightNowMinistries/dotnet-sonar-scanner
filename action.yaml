@@ -55,7 +55,7 @@ runs:
 
     - name: Start Pull Request Analysis
       # if: ${{ github.event_name == 'pull_request' }}
-      run: 'dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" /o:"${{ inputs.sonar-organization }}" /d:sonar.host.url="${{ inputs.sonar-url }}" /d:sonar.login="${{ inputs.sonar-login }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" /d:sonar.exclusions=${{ inputs.sonar-exclusions }} /d:sonar.coverage.exclusions=${{ inputs.sonar-coverage-exclusions }} /d:sonar.cpd.exclusions=${{ inputs.sonar-duplication-exclusions }}'
+      run: 'dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" /o:"${{ inputs.sonar-organization }}" /d:sonar.host.url="${{ inputs.sonar-url }}" /d:sonar.login="${{ inputs.sonar-login }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" /d:sonar.exclusions="${{ inputs.sonar-exclusions }}"" /d:sonar.coverage.exclusions="${{ inputs.sonar-code-coverage-exclusions }}" /d:sonar.cpd.exclusions="${{ inputs.sonar-duplication-exclusions }}"'
       shell: bash
 
     - name: DotNet Build
