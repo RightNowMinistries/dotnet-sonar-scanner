@@ -64,7 +64,7 @@ runs:
 
     - id: exclusions
       name: Configure Exclusions
-      run: echo 'option=${{ inputs.sonar-exclusions && format("/d:sonar.exclusions='{0}'", ${{ inputs.sonar-exclusions }}) || "" }}' >> $GITHUB_OUTPUT
+      run: echo 'option=${{ inputs.sonar-exclusions && format("/d:sonar.exclusions=\"{0}\"", ${{ inputs.sonar-exclusions }}) || "" }}' >> $GITHUB_OUTPUT
       shell: bash
 
     # - id: code-coverage-exclusions
