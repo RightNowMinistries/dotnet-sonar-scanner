@@ -19,19 +19,19 @@ inputs:
     default: "https://sonarcloud.io"
   sonar-exclusions:
     description: "List of files excluded from SonarCloud Static Analysis"
-    default: ''
+    default: ""
   sonar-code-coverage-exclusions: 
     description: "List of files excluded from SonarCloud Code Coverage Analysis"
-    default: ''
+    default: ""
   sonar-duplication-exclusions:
     description: "List of files excluded from SonarCloud Duplication Analysis"
-    default: ''
+    default: ""
   dotnet-version:
     description: "DotNet Version"
     required: true
   dotnet-test-project: 
     description: "Project name for test coverage"
-    default: ''
+    default: ""
 runs: 
   using: composite
   steps:
@@ -55,7 +55,7 @@ runs:
 
     - name: Start Pull Request Analysis
       # if: ${{ github.event_name == 'pull_request' }}
-      run: 'dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" /o:"${{ inputs.sonar-organization }}" /d:sonar.host.url="${{ inputs.sonar-url }}" /d:sonar.login="${{ inputs.sonar-login }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" /d:sonar.exclusions="${{ inputs.sonar-exclusions }}" /d:sonar.coverage.exclusions="${{ inputs.sonar-coverage-exclusions }}" /d:sonar.cpd.exclusions="${{ inputs.sonar-duplication-exclusions }}"'
+      run: 'dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" /o:"${{ inputs.sonar-organization }}" /d:sonar.host.url="${{ inputs.sonar-url }}" /d:sonar.login="${{ inputs.sonar-login }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" /d:sonar.exclusions=${{ inputs.sonar-exclusions }} /d:sonar.coverage.exclusions=${{ inputs.sonar-coverage-exclusions }} /d:sonar.cpd.exclusions=${{ inputs.sonar-duplication-exclusions }}'
       shell: bash
 
     - name: DotNet Build
