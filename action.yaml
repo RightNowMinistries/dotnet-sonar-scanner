@@ -62,23 +62,6 @@ runs:
       run: dotnet tool install --global dotnet-sonarscanner --version ${{ inputs.sonar-version }}
       shell: bash
 
-    # - id: exclusions
-    #   name: Configure Exclusions
-    #   run: echo 'option=${{ inputs.sonar-exclusions && format("/d:sonar.exclusions=\"{0}\"", ${{ inputs.sonar-exclusions }}) || "" }}' >> $GITHUB_OUTPUT
-    #   shell: bash
-
-    # - id: code-coverage-exclusions
-    #   name: Configure Code Coverage Exclusions
-    #   if: ${{ sonar-code-coverage-exclusions != '' }}
-    #   run: echo 'option=/d:sonar.coverage.exclusions="${{ inputs.sonar-code-coverage-exclusions }}"' >> $GITHUB_OUTPUT
-    #   shell: bash
-
-    # - id: code-duplication-exclusions
-    #   name: Configure Code Duplication Exclusions
-    #   if: ${{ sonar-duplication-exclusions != '' }}
-    #   run: echo 'option=/d:sonar.cpd.exclusions="${{ inputs.sonar-duplication-exclusions }}"' >> $GITHUB_OUTPUT
-    #   shell: bash
-
     - id: scan
       name: Start Pull Request Analysis
       # if: ${{ github.event_name == 'pull_request' }}
