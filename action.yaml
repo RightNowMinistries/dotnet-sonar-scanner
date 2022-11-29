@@ -32,6 +32,12 @@ inputs:
   dotnet-test-project: 
     description: "Project name for test coverage"
     default: ""
+  nuget-source-url:
+    description: "URL for Private Nuget Feed"
+    default: ""
+  nuget-auth-token:
+    description: "Auth Token for Private Nuget Feed"
+    default: ""
 runs: 
   using: composite
   steps:
@@ -48,6 +54,9 @@ runs:
       uses: actions/setup-dotnet@v2
       with: 
         dotnet-version: ${{ inputs.dotnet-version }}
+        source-url: ${{ inputs.nuget-source-url }}
+      env:
+        NUGET_AUTH_TOKEN: ${{ inputs.nuget-auth-token }}
         
     - name: Install Scanner
       run: dotnet tool install --global dotnet-sonarscanner --version ${{ inputs.sonar-version }}
