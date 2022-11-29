@@ -19,13 +19,10 @@ inputs:
     default: "https://sonarcloud.io"
   sonar-exclusions:
     description: "List of files excluded from SonarCloud Static Analysis"
-    default: ""
   sonar-code-coverage-exclusions: 
     description: "List of files excluded from SonarCloud Code Coverage Analysis"
-    default: ""
   sonar-duplication-exclusions:
     description: "List of files excluded from SonarCloud Duplication Analysis"
-    default: ""
   dotnet-version:
     description: "DotNet Version"
     required: true
@@ -62,10 +59,10 @@ runs:
       run: dotnet tool install --global dotnet-sonarscanner --version ${{ inputs.sonar-version }}
       shell: bash
 
-    - id: exclusions
-      name: Configure Exclusions
-      run: echo 'option=${{ inputs.sonar-exclusions && format("/d:sonar.exclusions=\"{0}\"", ${{ inputs.sonar-exclusions }}) || "" }}' >> $GITHUB_OUTPUT
-      shell: bash
+    # - id: exclusions
+    #   name: Configure Exclusions
+    #   run: echo 'option=${{ inputs.sonar-exclusions && format("/d:sonar.exclusions=\"{0}\"", ${{ inputs.sonar-exclusions }}) || "" }}' >> $GITHUB_OUTPUT
+    #   shell: bash
 
     # - id: code-coverage-exclusions
     #   name: Configure Code Coverage Exclusions
@@ -82,7 +79,7 @@ runs:
     - id: scan
       name: Start Pull Request Analysis
       # if: ${{ github.event_name == 'pull_request' }}
-      run: 'dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" /o:"${{ inputs.sonar-organization }}" /d:sonar.host.url="${{ inputs.sonar-url }}" /d:sonar.login="${{ inputs.sonar-login }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" ${{ steps.exclusions.outputs.option }}'
+      run: 'dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" /o:"${{ inputs.sonar-organization }}" /d:sonar.host.url="${{ inputs.sonar-url }}" /d:sonar.login="${{ inputs.sonar-login }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" /d:sonar.exclusions="${{ inputs.sonar-exclusions }}"'
       shell: bash
 
     - id: build
