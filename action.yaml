@@ -10,7 +10,7 @@ inputs:
     required: true
   sonar-version:
     description: "SonarCloud Version"
-    default: "4.6.0" # todo: Change this to a more recent version
+    default: "4.8.0"
   sonar-organization:
     description: "SonarCloud Organization"
     required: true
