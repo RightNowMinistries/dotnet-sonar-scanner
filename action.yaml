@@ -35,7 +35,7 @@ inputs:
 runs: 
   using: composite
   steps:
-    - run: echo "Running SonarCloud static analysis for ${{ inputs.sonar-project-key }} using SonarCloud ${{ sonar-version }}"
+    - run: echo "Running SonarCloud static analysis for ${{ inputs.sonar-project-key }} using SonarCloud ${{ inputs.sonar-version }}"
       shell: bash
 
     - name: Setup Java
