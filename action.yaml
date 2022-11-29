@@ -8,9 +8,9 @@ inputs:
   sonar-project-key:
     description: "SonarCloud Project Key"
     required: true
-  sonar-version:
-    description: "SonarCloud Version"
-    default: "4.8.0"
+  sonar-scanner-version:
+    description: "Sonar Scanner Version"
+    default: "4.10.0"
   sonar-organization:
     description: "SonarCloud Organization"
     required: true
@@ -41,7 +41,7 @@ inputs:
 runs: 
   using: composite
   steps:
-    - run: echo "Running SonarCloud static analysis for ${{ inputs.sonar-project-key }} using SonarCloud ${{ inputs.sonar-version }}"
+    - run: echo "Running SonarCloud static analysis for ${{ inputs.sonar-project-key }} using SonarCloud ${{ inputs.sonar-scanner-version }}"
       shell: bash
 
     - name: Setup Java
@@ -59,7 +59,7 @@ runs:
         NUGET_AUTH_TOKEN: ${{ inputs.nuget-auth-token }}
         
     - name: Install Scanner
-      run: dotnet tool install --global dotnet-sonarscanner --version ${{ inputs.sonar-version }}
+      run: dotnet tool install --global dotnet-sonarscanner --version ${{ inputs.sonar-scanner-version }}
       shell: bash
 
     - id: scan-pr
