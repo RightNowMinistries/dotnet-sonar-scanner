@@ -2,40 +2,40 @@ name: SonarCloud Scanner (dotnet)
 author: RightNow Ministries
 description: Runs SonarCloud Static Analysis and Code Coverage for .Net Core Projects
 inputs:
-  sonarLogin:
+  sonar-login:
     description: "Sonar Auth Token"
     required: true
-  sonarProjectKey:
+  sonar-project-key:
     description: "SonarCloud Project Key"
     required: true
-  sonarVersion:
+  sonar-version:
     description: "SonarCloud Version"
     default: "4.6.0" # todo: Change this to a more recent version
-  sonarOrganization:
+  sonar-organization:
     description: "SonarCloud Organization"
     required: true
-  sonarUrl:
+  sonar-url:
     description: "SonarCloud URL"
     default: "https://sonarcloud.io"
-  sonarExclusions:
+  sonar-exclusions:
     description: "List of files excluded from SonarCloud Static Analysis"
     default: ''
-  sonarCodeCoverageExclusions: 
+  sonar-code-coverage-exclusions: 
     description: "List of files excluded from SonarCloud Code Coverage Analysis"
     default: ''
-  sonarDuplicationExclusions:
+  sonar-duplication-exclusions:
     description: "List of files excluded from SonarCloud Duplication Analysis"
     default: ''
-  dotnetVersion:
+  dotnet-version:
     description: "DotNet Version"
     required: true
-  dotnetTestProject: 
+  dotnet-test-project: 
     description: "Project name for test coverage"
     default: ''
 runs: 
   using: composite
   steps:
-    - run: echo "Running SonarCloud static analysis for ${{ inputs.sonarProjectKey }} using SonarCloud ${{ sonarVersion }}"
+    - run: echo "Running SonarCloud static analysis for ${{ inputs.sonar-project-key }} using SonarCloud ${{ sonar-version }}"
       shell: bash
 
     - name: Setup Java
@@ -47,15 +47,15 @@ runs:
     - name: Setup DotNet
       uses: actions/setup-dotnet@v2
       with: 
-        dotnet-version: ${{ inputs.dotnetVersion }}
+        dotnet-version: ${{ inputs.dotnet-version }}
         
     - name: Install Scanner
-      run: dotnet tool install --global dotnet-sonarscanner --version ${{ inputs.sonarVersion }}
+      run: dotnet tool install --global dotnet-sonarscanner --version ${{ inputs.sonar-version }}
       shell: bash
 
     - name: Start Pull Request Analysis
       # if: ${{ github.event_name == 'pull_request' }}
-      run: 'dotnet-sonarscanner begin /key:"${{ inputs.sonarKey }}" /o:"${{ inputs.sonarOrganization }}" /d:sonar.host.url="${{ inputs.sonarUrl }}" /d:sonar.login="${{ inputs.sonarLogin }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnetTestProject }}/coverage.opencover.xml" /d:sonar.exclusions="${{ inputs.sonarExclusions }}" /d:sonar.coverage.exclusions="${{ inputs.sonarCoverageExclusions }}" /d:sonar.cpd.exclusions="${{ inputs.sonarDuplicationExclusions }}"'
+      run: 'dotnet-sonarscanner begin /key:"${{ inputs.sonar-key }}" /o:"${{ inputs.sonar-organization }}" /d:sonar.host.url="${{ inputs.sonar-url }}" /d:sonar.login="${{ inputs.sonar-login }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" /d:sonar.exclusions="${{ inputs.sonar-exclusions }}" /d:sonar.coverage.exclusions="${{ inputs.sonar-coverage-exclusions }}" /d:sonar.cpd.exclusions="${{ inputs.sonar-duplication-exclusions }}"'
       shell: bash
 
     - name: DotNet Build
@@ -63,9 +63,9 @@ runs:
       shell: bash
 
     - name: DotNet Test
-      run: 'dotnet test --no-build --no-restore ${{ inputs.dotnetTestProject }} /p:CollectCoverage=true /p:CoverletOutputFormat:opencover'
+      run: 'dotnet test --no-build --no-restore ${{ inputs.dotnet-test-project }} /p:CollectCoverage=true /p:CoverletOutputFormat:opencover'
       shell: bash
 
     - name: Complete Analysis
-      run: 'dotnet-sonarscanner end /d:sonar.login=${{ inputs.sonarLogin }}'
+      run: 'dotnet-sonarscanner end /d:sonar.login=${{ inputs.sonar-login }}'
       shell: bash
