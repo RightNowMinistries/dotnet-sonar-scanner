@@ -26,37 +26,37 @@ inputs:
   sonar-duplication-exclusions:
     description: "List of files excluded from SonarCloud Duplication Analysis"
     default: ""
-  dotnet-version:
-    description: "DotNet Version"
-    required: true
-  dotnet-test-project: 
-    description: "Project name for test coverage"
-    default: ""
-  nuget-source-url:
-    description: "URL for Private Nuget Feed"
-    default: ""
-  nuget-auth-token:
-    description: "Auth Token for Private Nuget Feed"
-    default: ""
+  # dotnet-version:
+  #   description: "DotNet Version"
+  #   required: true
+  # dotnet-test-project: 
+  #   description: "Project name for test coverage"
+  #   default: ""
+  # nuget-source-url:
+  #   description: "URL for Private Nuget Feed"
+  #   default: ""
+  # nuget-auth-token:
+  #   description: "Auth Token for Private Nuget Feed"
+  #   default: ""
 runs: 
   using: composite
   steps:
     - run: echo "Running SonarCloud static analysis for ${{ inputs.sonar-project-key }} using SonarCloud ${{ inputs.sonar-scanner-version }}"
       shell: bash
 
-    - name: Setup Java
-      uses: actions/setup-java@v2
-      with:
-        java-version: 11
-        distribution: temurin
+    # - name: Setup Java
+    #   uses: actions/setup-java@v2
+    #   with:
+    #     java-version: 11
+    #     distribution: temurin
 
-    - name: Setup DotNet
-      uses: actions/setup-dotnet@v2
-      with: 
-        dotnet-version: ${{ inputs.dotnet-version }}
-        source-url: ${{ inputs.nuget-source-url }}
-      env:
-        NUGET_AUTH_TOKEN: ${{ inputs.nuget-auth-token }}
+    # - name: Setup DotNet
+    #   uses: actions/setup-dotnet@v2
+    #   with: 
+    #     dotnet-version: ${{ inputs.dotnet-version }}
+    #     source-url: ${{ inputs.nuget-source-url }}
+    #   env:
+    #     NUGET_AUTH_TOKEN: ${{ inputs.nuget-auth-token }}
         
     - name: Install Scanner
       run: dotnet tool install --global dotnet-sonarscanner --version ${{ inputs.sonar-scanner-version }}
