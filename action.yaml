@@ -30,7 +30,7 @@ runs:
   using: composite
   steps:
     - id: config
-      run: echo "sonar-scanner-version=\"$SONAR_SCANNER_VERSION\"" >> $GITHUB_OUTPUT
+      run: echo "sonar-scanner-version=$SONAR_SCANNER_VERSION" >> $GITHUB_OUTPUT
       shell: bash
       env:
         SONAR_SCANNER_VERSION: 4.10.0
