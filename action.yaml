@@ -35,7 +35,7 @@ runs:
       env:
         SONAR_SCANNER_VERSION: 4.10.0
 
-    - run: echo "Running SonarCloud static analysis for ${{ inputs.sonar-project-key }} using SonarCloud $SONAR_SCANNER_VERSION"
+    - run: echo "Running Sonar Static Analysis for ${{ inputs.sonar-project-key }} using dotnet-sonarscanner $SONAR_SCANNER_VERSION"
       shell: bash
       env: 
         SONAR_SCANNER_VERSION: ${{ steps.config.outputs.sonar-scanner-version }}
@@ -65,7 +65,7 @@ runs:
     - id: scan-branch
       name: Start Branch Analysis
       if: ${{ github.event_name == 'push'}}
-      run: 'dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" /o:"${{ inputs.sonar-organization }}" /d:sonar.host.url="${{ inputs.sonar-url }}" /d:sonar.login="${{ inputs.sonar-login }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" /d:sonar.exclusions=$SONAR_EXCLUSIONS /d:sonar.coverage.exclusions=$SONAR_CODE_COVERAGE_EXCLUSIONS /d:sonar.cpd.exclusions=$SONAR_CODE_DUPLICATION_EXCLUSIONS /d:sonar.branch.name="${{ github.ref_name }}"'
+      run: 'dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" /o:"${{ inputs.sonar-organization }}" /d:sonar.host.url="${{ inputs.sonar-url }}" /d:sonar.login="${{ inputs.sonar-login }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" /d:sonar.exclusions=\"$SONAR_EXCLUSIONS\" /d:sonar.coverage.exclusions=\"$SONAR_CODE_COVERAGE_EXCLUSIONS\" /d:sonar.cpd.exclusions=\"$SONAR_CODE_DUPLICATION_EXCLUSIONS\" /d:sonar.branch.name="${{ github.ref_name }}"'
       shell: bash
       env:
         SONAR_EXCLUSIONS: ${{ inputs.sonar-exclusions }}
