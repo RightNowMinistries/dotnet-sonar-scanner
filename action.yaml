@@ -58,9 +58,9 @@ runs:
       run: dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" /o:"${{ inputs.sonar-organization }}" /d:sonar.host.url="${{ inputs.sonar-url }}" /d:sonar.login="${{ inputs.sonar-login }}" /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" /d:sonar.exclusions=$SONAR_EXCLUSIONS /d:sonar.coverage.exclusions=$SONAR_CODE_COVERAGE_EXCLUSIONS /d:sonar.cpd.exclusions=$SONAR_CODE_DUPLICATION_EXCLUSIONS
       shell: bash
       env:
-        SONAR_EXCLUSIONS: inputs.sonar-exclusions
-        SONAR_CODE_COVERAGE_EXCLUSIONS: inputs.sonar-code-coverage-exclusions
-        SONAR_CODE_DUPLICATION_EXCLUSIONS: inputs.sonar-duplication-exclusions
+        SONAR_EXCLUSIONS: ${{ inputs.sonar-exclusions }}
+        SONAR_CODE_COVERAGE_EXCLUSIONS: ${{ inputs.sonar-code-coverage-exclusions }}
+        SONAR_CODE_DUPLICATION_EXCLUSIONS: ${{ inputs.sonar-duplication-exclusions }}
 
     - id: scan-branch
       name: Start Branch Analysis
