@@ -30,7 +30,7 @@ runs:
   using: composite
   steps:
     - id: config
-      run: echo "sonar-scanner-version='$SONAR_SCANNER_VERSION'" >> $GITHUB_OUTPUT
+      run: echo "sonar-scanner-version=\"$SONAR_SCANNER_VERSION\"" >> $GITHUB_OUTPUT
       shell: bash
       env:
         SONAR_SCANNER_VERSION: 4.10.0
@@ -38,7 +38,7 @@ runs:
     - run: echo "Running SonarCloud static analysis for ${{ inputs.sonar-project-key }} using SonarCloud $SONAR_SCANNER_VERSION"
       shell: bash
       env: 
-        SONAR_SCANNER_VERSION: ${{ steps.config.output.sonar-scanner-version }}
+        SONAR_SCANNER_VERSION: ${{ steps.config.outputs.sonar-scanner-version }}
 
     - name: Setup Java
       uses: actions/setup-java@v2
