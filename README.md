@@ -2,6 +2,49 @@
 
 Custom GitHub Action for running SonarScanner for .NET
 
+## Versioning
+
+This action follows similar patterns to versioning as other GitHub actions.
+
+### Non-Breaking Changes
+
+When a non-breaking change is published, we will increment the minor version for the action. Example: `1.1` -> `1.2`
+
+### Breaking Changes
+
+Whenver a change is made that alters the contract for require parameters, changes default values or changes major versions for the `dotnet-sonarscanner` tool that is used, the major version should be incremented. Example: `1.1` -> `2.0`.
+
+### Tags
+
+When introducing new versions, there should always be a `vX` and a `vX.Y` tag to pin the version. The `vX` tag should always reference the latest `vX.Y` tag where those major version matches. 
+
+For example, if we introduce a version `2.2`, we should end up with a set of tags like:
+
+| Tag | Commit Hash |
+| --- | ----------- |
+| v2.1 | #XYZ |
+| v2.0 | #WXY |
+| v2 | #XYZ |
+| v1.1 | #ABC |
+| v1.0 | #CBA |
+| v1 | #ABC |
+
+#### Create New Major Version Tag
+
+```bash
+git tag -a v1
+git tag -a v1.0
+git push origin --tags
+```
+
+#### Create New Minor Version Tag
+
+```bash
+git tag -af v1
+git tag -a v1.1
+git push origin -f --tags
+```
+
 ## Minimal Configuration
 
 ```yaml
