@@ -20,7 +20,6 @@ Custom GitHub Action for running SonarScanner for .NET
         sonar-login: ${{ secrets.SONAR_LOGIN }}
         sonar-project-key: my-sonar-project-key
         sonar-organization: "my-organization"
-        sonar-code-coverage-exclusions: "MyService.Tests.Unit/**,**/Startup.cs"
 ```
 
 ## Full Configuration
@@ -43,7 +42,12 @@ Custom GitHub Action for running SonarScanner for .NET
         sonar-organization: "my-organization"
         sonar-url: "https://sonarcloud.io"
         sonar-exclusions: "**/Startup.cs"
-        sonar-code-coverage-exclusions: "MyService.Tests.Unit/**"
+        sonar-code-coverage-exclusions: > 
+            MyService.Tests.Unit/**,
+            MyService.SDK/**,
+            **/Middleware/**,
+            **/Startup.cs,
+            **/Program.cs,
         sonar-duplication-exclusions: "**/**Test.cs"
 ```
 
