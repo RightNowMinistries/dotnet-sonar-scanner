@@ -62,10 +62,10 @@ runs:
         inputs.sonar-organization,
         inputs.sonar-login,
         inputs.sonar-url,
-        inputs.dotnet-test-project != '' ? format('{0}/coverage.opencover.xml', inputs.dotnet-test-project) : ''),
-        inputs.sonar-exclusions != '' ? format('/d:sonar.exclusions="{0}"', inputs.sonar-exclusions) : ''),
-        inputs.sonar-code-coverage-exclusions != '' ? format('/d:sonar.coverage.exclusions="{0}"', inputs.sonar-code-coverage-exclusions) : ''),
-        inputs.sonar-duplication-exclusions != '' ? format('/d:sonar.cpd.exclusions="{0}"', inputs.sonar-duplication-exclusions) : '')
+        inputs.dotnet-test-project != '' && format('{0}/coverage.opencover.xml', inputs.dotnet-test-project) || ''),
+        inputs.sonar-exclusions != '' && format('/d:sonar.exclusions="{0}"', inputs.sonar-exclusions) || ''),
+        inputs.sonar-code-coverage-exclusions != '' && format('/d:sonar.coverage.exclusions="{0}"', inputs.sonar-code-coverage-exclusions) || ''),
+        inputs.sonar-duplication-exclusions != '' && format('/d:sonar.cpd.exclusions="{0}"', inputs.sonar-duplication-exclusions) || '')
         }}
       shell: bash
 
