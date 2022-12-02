@@ -33,6 +33,9 @@ runs:
       run: |
         echo "Running Sonar Static Analysis for ${{ inputs.sonar-project-key }} using dotnet-sonarscanner $SONAR_SCANNER_VERSION"
         echo "sonar-scanner-version=$SONAR_SCANNER_VERSION" >> $GITHUB_OUTPUT
+        echo "Using Exclusions: ${{ inputs.sonar-exclusions }}"
+        echo "Using Code Coverage Exclusions: ${{ inputs.sonar-code-coverage-exclusions }}"
+        echo "Using Duplication Exclusions: ${{ inputs.sonar-duplication-exclusions }}"
       shell: bash
       env:
         SONAR_SCANNER_VERSION: 4.10.0
