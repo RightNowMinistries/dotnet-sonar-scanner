@@ -34,6 +34,13 @@ runs:
       env:
         SONAR_SCANNER_VERSION: 4.10.0
 
+    - id: configure-exclusions
+      run: |
+        echo "sonar.exclusions=${{ inputs.sonar-exclusions }}" >> $GITHUB_OUTPUT
+        echo "sonar.coverage.exclusions=${{ inputs.sonar-code-coverage-exclusions }}" >> $GITHUB_OUTPUT
+        echo "sonar.cpd.exclusions=${{ inputs.sonar-duplication-exclusions }}" >> $GITHUB_OUTPUT
+      shell: bash
+
     - name: Setup Java
       uses: actions/setup-java@v2
       with:
@@ -50,14 +57,16 @@ runs:
       name: Start Pull Request Analysis
       if: ${{ github.event_name == 'pull_request'}}
       run: > 
-        dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" 
-        /o:"${{ inputs.sonar-organization }}" 
-        /d:sonar.host.url="${{ inputs.sonar-url }}" 
-        /d:sonar.login="${{ inputs.sonar-login }}" 
-        /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" 
-        ${{ inputs.sonar-exclusions && format('/d:sonar.exclusions="{0}"', inputs.sonar-exclusions) || ''}}
-        /d:sonar.coverage.exclusions="${{ inputs.sonar-code-coverage-exclusions }}"
-        ${{ inputs.sonar-duplication-exclusions && format('/d:sonar.cpd.exclusions="{0}"', inputs.sonar-duplication-exclusions) || ''}}
+        ${{ format('dotnet sonarscanner begin /key:"{0}" /o:"{1}" /d:sonar.login="{1}" /d:sonar.host.url="{2}" /d:sonar.cs.opencover.reportsPaths="{3}" {4} {5} {6}',
+        inputs.sonar-project-key,
+        inputs.sonar-organization,
+        inputs-sonar-login,
+        inputs.sonar-url,
+        inputs.dotnet-test-project != '' ? format('{0}/coverage.opencover.xml', inputs.dotnet-test-project) : ''),
+        inputs.sonar-exclusions != '' ? format('/d:sonar.exclusions="{0}"', inputs.sonar-exclusions) : ''),
+        inputs.sonar-code-coverage-exclusions != '' ? format('/d:sonar.coverage.exclusions="{0}"', inputs.sonar-code-coverage-exclusions) : ''),
+        inputs.sonar-duplication-exclusions != '' ? format('/d:sonar.cpd.exclusions="{0}"', inputs.sonar-duplication-exclusions) : '')
+        }}
       shell: bash
 
     - id: scan-branch
