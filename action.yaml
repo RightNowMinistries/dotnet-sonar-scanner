@@ -57,7 +57,7 @@ runs:
       name: Start Pull Request Analysis
       if: ${{ github.event_name == 'pull_request'}}
       run: > 
-        ${{ format('dotnet sonarscanner begin /key:"{0}" /o:"{1}" /d:sonar.login="{1}" /d:sonar.host.url="{2}" /d:sonar.cs.opencover.reportsPaths="{3}" {4} {5} {6}',
+        ${{ format('dotnet sonarscanner begin /key:"{0}" /o:"{1}" /d:sonar.login="{2}" /d:sonar.host.url="{3}" /d:sonar.cs.opencover.reportsPaths="{5}" {5} {6} {7}',
         inputs.sonar-project-key,
         inputs.sonar-organization,
         inputs.sonar-login,
