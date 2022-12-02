@@ -16,10 +16,13 @@ inputs:
     default: "https://sonarcloud.io"
   sonar-exclusions:
     description: "List of files excluded from SonarCloud Static Analysis"
+    default: ""
   sonar-code-coverage-exclusions: 
     description: "List of files excluded from SonarCloud Code Coverage Analysis"
+    default: ""
   sonar-duplication-exclusions:
     description: "List of files excluded from SonarCloud Duplication Analysis"
+    default: ""
   dotnet-test-project: 
     description: "Project name for test coverage. If not provided, all tests will run."
     default: "" 
