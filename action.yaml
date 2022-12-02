@@ -60,7 +60,7 @@ runs:
         ${{ format('dotnet sonarscanner begin /key:"{0}" /o:"{1}" /d:sonar.login="{1}" /d:sonar.host.url="{2}" /d:sonar.cs.opencover.reportsPaths="{3}" {4} {5} {6}',
         inputs.sonar-project-key,
         inputs.sonar-organization,
-        inputs-sonar-login,
+        inputs.sonar-login,
         inputs.sonar-url,
         inputs.dotnet-test-project != '' ? format('{0}/coverage.opencover.xml', inputs.dotnet-test-project) : ''),
         inputs.sonar-exclusions != '' ? format('/d:sonar.exclusions="{0}"', inputs.sonar-exclusions) : ''),
