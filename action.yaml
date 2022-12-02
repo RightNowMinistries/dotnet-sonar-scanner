@@ -16,14 +16,14 @@ inputs:
     default: "https://sonarcloud.io"
   sonar-exclusions:
     description: "List of files excluded from SonarCloud Static Analysis"
-  sonar-code-coverage-exclusions: 
+  sonar-code-coverage-exclusions:
     description: "List of files excluded from SonarCloud Code Coverage Analysis"
   sonar-duplication-exclusions:
     description: "List of files excluded from SonarCloud Duplication Analysis"
-  dotnet-test-project: 
+  dotnet-test-project:
     description: "Project name for test coverage. If not provided, all tests will run."
-    default: "" 
-runs: 
+    default: ""
+runs:
   using: composite
   steps:
     - id: config
@@ -39,25 +39,25 @@ runs:
       with:
         java-version: 11
         distribution: temurin
-        
+
     - name: Install Scanner
       run: dotnet tool install --global dotnet-sonarscanner --version $SONAR_SCANNER_VERSION
       shell: bash
-      env: 
+      env:
         SONAR_SCANNER_VERSION: ${{ steps.config.outputs.sonar-scanner-version }}
 
     - id: scan-pr
       name: Start Pull Request Analysis
       if: ${{ github.event_name == 'pull_request'}}
-      run: > 
+      run: >
         dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" 
         /o:"${{ inputs.sonar-organization }}" 
         /d:sonar.host.url="${{ inputs.sonar-url }}" 
         /d:sonar.login="${{ inputs.sonar-login }}" 
         /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" 
-        ${{ inputs.sonar-exclusions && format('/d:sonar.exclusions="{0}"', inputs.sonar-exclusions) || ''}}
-        /d:sonar.coverage.exclusions="${{ inputs.sonar-code-coverage-exclusions }}"
-        ${{ inputs.sonar-duplication-exclusions && format('/d:sonar.cpd.exclusions="{0}"', inputs.sonar-duplication-exclusions) || ''}}
+        /d:sonar.exclusions="${SONAR_EXCLUSIONS}"
+        /d:sonar.coverage.exclusions="${SONAR_CODE_COVERAGE_EXCLUSIONS}"
+        /d:sonar.cpd.exclusions="${SONAR_CODE_DUPLICATION_EXCLUSIONS}"
       shell: bash
 
     - id: scan-branch
