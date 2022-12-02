@@ -18,6 +18,7 @@ inputs:
     description: "List of files excluded from SonarCloud Static Analysis"
   sonar-code-coverage-exclusions:
     description: "List of files excluded from SonarCloud Code Coverage Analysis"
+    default: ""
   sonar-duplication-exclusions:
     description: "List of files excluded from SonarCloud Duplication Analysis"
   dotnet-test-project:
