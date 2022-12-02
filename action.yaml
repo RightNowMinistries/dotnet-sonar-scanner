@@ -55,9 +55,9 @@ runs:
         /d:sonar.host.url="${{ inputs.sonar-url }}" 
         /d:sonar.login="${{ inputs.sonar-login }}" 
         /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" 
-        /d:sonar.exclusions="${{ inputs.sonar-exclusions }}"
+        /d:sonar.exclusions=
         /d:sonar.coverage.exclusions="${{ inputs.sonar-code-coverage-exclusions }}"
-        /d:sonar.cpd.exclusions="${{ inputs.sonar-duplication-exclusions }}"
+        /d:sonar.cpd.exclusions=
       shell: bash
 
     - id: scan-branch
