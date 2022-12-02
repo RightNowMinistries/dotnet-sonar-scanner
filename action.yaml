@@ -50,6 +50,9 @@ runs:
       name: Start Pull Request Analysis
       if: ${{ github.event_name == 'pull_request'}}
       run: >
+        echo "${SONAR_EXCLUSIONS}"
+        echo "${SONAR_CODE_COVERAGE_EXCLUSIONS}"
+        echo "${SONAR_CODE_DUPLICATION_EXCLUSIONS}"
         dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" 
         /o:"${{ inputs.sonar-organization }}" 
         /d:sonar.host.url="${{ inputs.sonar-url }}" 
