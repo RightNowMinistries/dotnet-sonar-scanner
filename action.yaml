@@ -33,7 +33,7 @@ runs:
         echo "sonar-scanner-version=$SONAR_SCANNER_VERSION" >> $GITHUB_OUTPUT
       shell: bash
       env:
-        SONAR_SCANNER_VERSION: 4.10.0
+        SONAR_SCANNER_VERSION: 5.9.2
 
     - name: Setup Java
       uses: actions/setup-java@v2
@@ -51,7 +51,7 @@ runs:
       name: Start Pull Request Analysis
       if: ${{ github.event_name == 'pull_request'}}
       run: |
-        dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" \
+        dotnet sonarscanner begin /k:"${{ inputs.sonar-project-key }}" \
           /o:"${{ inputs.sonar-organization }}" \
           /d:sonar.host.url="${{ inputs.sonar-url }}" \
           /d:sonar.login="${{ inputs.sonar-login }}" \
@@ -59,6 +59,7 @@ runs:
           /d:sonar.exclusions="${SONAR_EXCLUSIONS:-''}" \
           /d:sonar.coverage.exclusions="${SONAR_CODE_COVERAGE_EXCLUSIONS:-''}" \
           /d:sonar.cpd.exclusions="${SONAR_CODE_DUPLICATION_EXCLUSIONS:-''}" \
+          /d:sonar.dotnet.excludeTestProjects=true \
       shell: bash
       env:
         SONAR_EXCLUSIONS: ${{ inputs.sonar-exclusions }}
@@ -69,7 +70,7 @@ runs:
       name: Start Branch Analysis
       if: ${{ github.event_name == 'push'}}
       run: |
-        dotnet-sonarscanner begin /key:"${{ inputs.sonar-project-key }}" \
+        dotnet sonarscanner begin /k:"${{ inputs.sonar-project-key }}" \
           /o:"${{ inputs.sonar-organization }}" \
           /d:sonar.host.url="${{ inputs.sonar-url }}" \
           /d:sonar.login="${{ inputs.sonar-login }}" \
@@ -78,6 +79,7 @@ runs:
           /d:sonar.coverage.exclusions="${SONAR_CODE_COVERAGE_EXCLUSIONS:-''}" \
           /d:sonar.cpd.exclusions="${SONAR_CODE_DUPLICATION_EXCLUSIONS:-''}" \
           /d:sonar.branch.name="${{ github.ref_name }}" \
+          /d:sonar.dotnet.excludeTestProjects=true \
       shell: bash
       env:
         SONAR_EXCLUSIONS: ${{ inputs.sonar-exclusions }}
@@ -95,5 +97,5 @@ runs:
       shell: bash
 
     - name: Complete Analysis
-      run: dotnet-sonarscanner end /d:sonar.login=${{ inputs.sonar-login }}
+      run: dotnet sonarscanner end /d:sonar.login=${{ inputs.sonar-login }}
       shell: bash
