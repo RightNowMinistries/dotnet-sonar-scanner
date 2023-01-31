@@ -103,7 +103,7 @@ runs:
     - id: copy-required-dlls
       name: Copy Required DLLs
       if: ${{ inputs.copy-dlls == 'true' }}
-      run: cp -f ${{ inputs.file-to-copy }} ${{ copy-to-directory }}
+      run: cp -f ${{ inputs.files-to-copy }} ${{ inputs.copy-to-directory }}
       shell: bash
 
     - id: test
