@@ -24,6 +24,15 @@ inputs:
   dotnet-test-project:
     description: "Project name for test coverage. If not provided, all tests will run."
     default: ""
+  copy-dlls:
+    description: "Copy DLLs to a directory. If not provided, the Copy DLLs step will be skipped."
+    default: "false"
+  files-to-copy:
+    description: "List of files to copy."
+    default: ""
+  copy-to-directory:
+    description: "Directory to copy the files to."
+    default: ""
 runs:
   using: composite
   steps:
@@ -89,6 +98,12 @@ runs:
     - id: build
       name: DotNet Build
       run: dotnet build
+      shell: bash
+
+    - id: copy-required-dlls
+      name: Copy Required DLLs
+      if: ${{ inputs.copy-dlls == 'true' }}
+      run: cp -f ${{ inputs.files-to-copy }} ${{ inputs.copy-to-directory }}
       shell: bash
 
     - id: test
