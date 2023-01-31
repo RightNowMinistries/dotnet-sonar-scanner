@@ -91,6 +91,12 @@ runs:
       run: dotnet build
       shell: bash
 
+    - id: Copy Required DLL
+      name: Copy Required DLL
+      if: ${{ inputs.copy-dlls == true }}
+      run: cp -f ${{ inputs.file-to-copy }} ${{ copy-to-directory }}
+      shell: bash
+
     - id: test
       name: DotNet Test
       run: dotnet test --no-build --no-restore ${{ inputs.dotnet-test-project }} /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
