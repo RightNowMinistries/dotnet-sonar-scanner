@@ -100,7 +100,7 @@ runs:
       run: dotnet build
       shell: bash
 
-    - id: Copy Required DLLs
+    - id: copy-required-dlls
       name: Copy Required DLLs
       if: ${{ inputs.copy-dlls == 'true' }}
       run: cp -f ${{ inputs.file-to-copy }} ${{ copy-to-directory }}
