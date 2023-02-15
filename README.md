@@ -2,6 +2,13 @@
 
 Custom GitHub Action for running SonarScanner for .NET
 
+## Versions
+
+| Dotnet Version | Action Version |
+| ------------- | ------------- |
+| < .NET 6 | v1 |
+| >= .NET 6 | v2 |
+
 ## Minimal Configuration
 
 ```yaml
