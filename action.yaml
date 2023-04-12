@@ -60,7 +60,7 @@ runs:
       name: Start Pull Request Analysis
       if: ${{ github.event_name == 'pull_request'}}
       run: |
-        CODE_COVERAGE_DEFAULT_EXCLUSIONS="*/Program.cs"
+        CODE_COVERAGE_DEFAULT_EXCLUSIONS="**/Startup.cs,**/Program.cs"
         CODE_COVERAGE_EXCLUSIONS="${SONAR_CODE_COVERAGE_EXCLUSIONS:-''}"
 
         if [[ -z "$CODE_COVERAGE_EXCLUSIONS" ]]; then
