@@ -60,13 +60,22 @@ runs:
       name: Start Pull Request Analysis
       if: ${{ github.event_name == 'pull_request'}}
       run: |
+        CODE_COVERAGE_DEFAULT_EXCLUSIONS="**/Startup.cs,**/Program.cs"
+        CODE_COVERAGE_EXCLUSIONS="${SONAR_CODE_COVERAGE_EXCLUSIONS:-''}"
+
+        if [[ -z "$CODE_COVERAGE_EXCLUSIONS" ]]; then
+          CODE_COVERAGE_EXCLUSIONS="$CODE_COVERAGE_DEFAULT_EXCLUSIONS"
+        else
+          CODE_COVERAGE_EXCLUSIONS="$CODE_COVERAGE_DEFAULT_EXCLUSIONS,$CODE_COVERAGE_EXCLUSIONS"
+        fi
+
         dotnet sonarscanner begin /k:"${{ inputs.sonar-project-key }}" \
           /o:"${{ inputs.sonar-organization }}" \
           /d:sonar.host.url="${{ inputs.sonar-url }}" \
           /d:sonar.login="${{ inputs.sonar-login }}" \
           /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" \
           /d:sonar.exclusions="${SONAR_EXCLUSIONS:-''}" \
-          /d:sonar.coverage.exclusions="${SONAR_CODE_COVERAGE_EXCLUSIONS:-''}" \
+          /d:sonar.coverage.exclusions="$CODE_COVERAGE_EXCLUSIONS" \
           /d:sonar.cpd.exclusions="${SONAR_CODE_DUPLICATION_EXCLUSIONS:-''}" \
           /d:sonar.dotnet.excludeTestProjects=true \
       shell: bash

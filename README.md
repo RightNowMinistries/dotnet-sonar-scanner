@@ -106,6 +106,8 @@ Comma separated list of file references excluded from Static Analysis.
 
 Comma separated list of file references excluded from Code Coverage Analysis.
 
+Default paths excluded: **/Startup.cs,**/Program.cs
+
 ## `sonar-duplication-exclusions`
 
 *Optional*
