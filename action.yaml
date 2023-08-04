@@ -42,12 +42,12 @@ runs:
         echo "sonar-scanner-version=$SONAR_SCANNER_VERSION" >> $GITHUB_OUTPUT
       shell: bash
       env:
-        SONAR_SCANNER_VERSION: 5.9.2
+        SONAR_SCANNER_VERSION: 5.13.0
 
     - name: Setup Java
       uses: actions/setup-java@v2
       with:
-        java-version: 11
+        java-version: 17
         distribution: temurin
 
     - name: Install Scanner
