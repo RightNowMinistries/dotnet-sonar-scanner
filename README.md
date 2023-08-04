@@ -55,6 +55,7 @@ Custom GitHub Action for running SonarScanner for .NET
             **/Middleware/**,
             **/Startup.cs,
             **/Program.cs,
+            **/Repositories/**,          
         sonar-duplication-exclusions: "**/**Test.cs"
 ```
 
