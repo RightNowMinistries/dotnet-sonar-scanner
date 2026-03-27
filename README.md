@@ -70,6 +70,14 @@ This action requires that the .Net SDK is installed as needed to build and execu
 
 Specify a test project name. If provided, only tests within this project will be executed. If left empty, all tests will be executed.
 
+## `copy-aspnetcore-refs`
+
+*Optional*
+
+Defaults to `true`.
+
+Copies `Microsoft.AspNetCore*.dll` files from any `refs` directories under the configured test project's `bin` output into the corresponding output directory before coverage runs. This helps Coverlet instrument ASP.NET Core shared-framework libraries whose reference assemblies are otherwise only present under `refs/`.
+
 ## `sonar-login`
 
 *Required*
