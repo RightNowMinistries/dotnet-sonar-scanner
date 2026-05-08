@@ -24,6 +24,9 @@ inputs:
   dotnet-test-project:
     description: "Project name for test coverage. If not provided, all tests will run."
     default: ""
+  copy-aspnetcore-refs:
+    description: "Copy ASP.NET Core reference assemblies from test output refs folders before coverage runs."
+    default: "true"
   copy-dlls:
     description: "Copy DLLs to a directory. If not provided, the Copy DLLs step will be skipped."
     default: "false"
@@ -113,6 +116,33 @@ runs:
       name: Copy Required DLLs
       if: ${{ inputs.copy-dlls == 'true' }}
       run: cp -f ${{ inputs.files-to-copy }} ${{ inputs.copy-to-directory }}
+      shell: bash
+
+    - id: copy-aspnetcore-reference-dlls
+      name: Copy ASP.NET Core Reference DLLs
+      if: ${{ inputs.copy-aspnetcore-refs == 'true' && inputs.dotnet-test-project != '' }}
+      run: |
+        set -euo pipefail
+
+        copied=0
+        while IFS= read -r refs_dir; do
+          target_dir="$(dirname "$refs_dir")"
+          shopt -s nullglob
+          aspnetcore_dlls=("$refs_dir"/Microsoft.AspNetCore*.dll)
+          shopt -u nullglob
+
+          if [[ ${#aspnetcore_dlls[@]} -eq 0 ]]; then
+            continue
+          fi
+
+          cp -f "${aspnetcore_dlls[@]}" "$target_dir"
+          copied=$((copied + ${#aspnetcore_dlls[@]}))
+          echo "Copied ${#aspnetcore_dlls[@]} ASP.NET Core reference DLLs from $refs_dir to $target_dir"
+        done < <(find "${{ inputs.dotnet-test-project }}/bin" -type d -name refs 2>/dev/null)
+
+        if [[ $copied -eq 0 ]]; then
+          echo "No ASP.NET Core reference DLLs were copied."
+        fi
       shell: bash
 
     - id: test
