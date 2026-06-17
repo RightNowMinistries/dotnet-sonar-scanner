@@ -2,7 +2,7 @@ name: SonarCloud Scanner (dotnet)
 author: RightNow Ministries
 description: Runs SonarCloud Static Analysis and Code Coverage for .Net Core Projects
 inputs:
-  sonar-login:
+  sonar-token:
     description: "Sonar Auth Token"
     required: true
   sonar-project-key:
@@ -75,7 +75,7 @@ runs:
         dotnet sonarscanner begin /k:"${{ inputs.sonar-project-key }}" \
           /o:"${{ inputs.sonar-organization }}" \
           /d:sonar.host.url="${{ inputs.sonar-url }}" \
-          /d:sonar.login="${{ inputs.sonar-login }}" \
+          /d:sonar.token="${{ inputs.sonar-token }}" \
           /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" \
           /d:sonar.exclusions="${SONAR_EXCLUSIONS:-''}" \
           /d:sonar.coverage.exclusions="$CODE_COVERAGE_EXCLUSIONS" \
@@ -94,7 +94,7 @@ runs:
         dotnet sonarscanner begin /k:"${{ inputs.sonar-project-key }}" \
           /o:"${{ inputs.sonar-organization }}" \
           /d:sonar.host.url="${{ inputs.sonar-url }}" \
-          /d:sonar.login="${{ inputs.sonar-login }}" \
+          /d:sonar.token="${{ inputs.sonar-token }}" \
           /d:sonar.cs.opencover.reportsPaths="${{ inputs.dotnet-test-project }}/coverage.opencover.xml" \
           /d:sonar.exclusions="${SONAR_EXCLUSIONS:-''}" \
           /d:sonar.coverage.exclusions="${SONAR_CODE_COVERAGE_EXCLUSIONS:-''}" \
@@ -151,5 +151,5 @@ runs:
       shell: bash
 
     - name: Complete Analysis
-      run: dotnet sonarscanner end /d:sonar.login=${{ inputs.sonar-login }}
+      run: dotnet sonarscanner end /d:sonar.token=${{ inputs.sonar-token }}
       shell: bash
