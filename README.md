@@ -152,15 +152,15 @@ For example, if we introduce a version `2.2`, we should end up with a set of tag
 #### Create New Major Version Tag
 
 ```bash
-git tag -a v1
 git tag -a v1.0
+git tag -a v1 v1.0
 git push origin --tags
 ```
 
 #### Create New Minor Version Tag
 
 ```bash
-git tag -af v1
 git tag -a v1.1
+git tag -f v1 v1.1
 git push origin -f --tags
 ```
