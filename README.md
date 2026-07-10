@@ -21,12 +21,12 @@ Custom GitHub Action for running SonarScanner for .NET
         NUGET_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
 
  -  name: Run Sonar Scan
-    uses: RightNowMinistries/dotnet-sonar-scanner@v1
-    with: 
-        dotnet-test-project: MyService.Tests.Unit
-        sonar-token: ${{ secrets.SONAR_TOKEN }}
-        sonar-project-key: my-sonar-project-key
-        sonar-organization: "my-organization"
+     uses: RightNowMinistries/dotnet-sonar-scanner@v2
+     with: 
+         dotnet-test-project: MyService.Tests.Unit
+         sonar-token: ${{ secrets.SONAR_TOKEN }}
+         sonar-project-key: my-sonar-project-key
+         sonar-organization: "my-organization"
 ```
 
 ## Full Configuration
@@ -41,13 +41,13 @@ Custom GitHub Action for running SonarScanner for .NET
         NUGET_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
 
  -  name: Run Sonar Scan
-    uses: RightNowMinistries/dotnet-sonar-scanner@v1
-    with: 
-        dotnet-test-project: MyService.Tests.Unit
-        sonar-token: ${{ secrets.SONAR_TOKEN }}
-        sonar-project-key: my-sonar-project-key
-        sonar-organization: "my-organization"
-        sonar-url: "https://sonarcloud.io"
+     uses: RightNowMinistries/dotnet-sonar-scanner@v2
+     with: 
+         dotnet-test-project: MyService.Tests.Unit
+         sonar-token: ${{ secrets.SONAR_TOKEN }}
+         sonar-project-key: my-sonar-project-key
+         sonar-organization: "my-organization"
+         sonar-url: "https://sonarcloud.io"
         sonar-exclusions: "**/Startup.cs"
         sonar-code-coverage-exclusions: > 
             MyService.Tests.Unit/**,
