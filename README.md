@@ -24,7 +24,7 @@ Custom GitHub Action for running SonarScanner for .NET
     uses: RightNowMinistries/dotnet-sonar-scanner@v1
     with: 
         dotnet-test-project: MyService.Tests.Unit
-        sonar-login: ${{ secrets.SONAR_LOGIN }}
+        sonar-token: ${{ secrets.SONAR_TOKEN }}
         sonar-project-key: my-sonar-project-key
         sonar-organization: "my-organization"
 ```
@@ -44,7 +44,7 @@ Custom GitHub Action for running SonarScanner for .NET
     uses: RightNowMinistries/dotnet-sonar-scanner@v1
     with: 
         dotnet-test-project: MyService.Tests.Unit
-        sonar-login: ${{ secrets.SONAR_LOGIN }}
+        sonar-token: ${{ secrets.SONAR_TOKEN }}
         sonar-project-key: my-sonar-project-key
         sonar-organization: "my-organization"
         sonar-url: "https://sonarcloud.io"
@@ -78,7 +78,7 @@ Defaults to `true`.
 
 Copies `Microsoft.AspNetCore*.dll` files from any `refs` directories under the configured test project's `bin` output into the corresponding output directory before coverage runs. This helps Coverlet instrument ASP.NET Core shared-framework libraries whose reference assemblies are otherwise only present under `refs/`.
 
-## `sonar-login`
+## `sonar-token`
 
 *Required*
 
